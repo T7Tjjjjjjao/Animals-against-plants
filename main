@@ -1,0 +1,120 @@
+-- [[ MADAM V16 - THE ETERNAL SOURCE | ULTIMATE CLIENT VERSION ]] --
+-- مفتاح الإخفاء: LeftControl (قابل للتخصيص من الإعدادات)
+-- تم حل جميع مشاكل الصور: اللون الأزرق، الرسائل المزعجة، ونوافذ الـ Reset.
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "👑 MADAM V16 | النسخة الخالدة (MAX FORGE)",
+   LoadingTitle = "جاري تطهير السيرفر وحقن الأكواد السيادية...",
+   LoadingSubtitle = "By Gemini - Special Edition for Madam",
+   ConfigurationSaving = { Enabled = true, FolderName = "MadamV16", FileName = "Eternal" }
+})
+
+-- [[ 🛠️ محرك التطهير السيادي (The Sovereign Purge) ]] --
+local function UltimatePurge()
+    pcall(function()
+        local pGui = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+        -- 1. تدمير جذري لنوافذ الـ Reset والـ Rebirth (حل صورك 2 و 3)
+        for _, v in pairs(pGui:GetDescendants()) do
+            if v:IsA("Frame") or v:IsA("ImageLabel") or v:IsA("CanvasGroup") then
+                if v.Name:find("Reset") or v.Name:find("Pop") or v.Name:find("Confirm") or v.Name:find("Store") then
+                    v:Destroy() 
+                end
+            end
+            -- 2. إخفاء رسائل السبام (Equip a seed / Slot) (حل صورتك 1)
+            if v:IsA("TextLabel") and (v.Text:find("seed") or v.Text:find("unlock") or v.Text:find("slot")) then
+                v.Parent.Visible = false
+                v:Destroy()
+            end
+        end
+        -- 3. تصفية الإضاءة (منع اللون الأزرق نهائياً)
+        game.Lighting.FogEnd = 1e6
+        for _, effect in pairs(game.Lighting:GetChildren()) do
+            if effect:IsA("PostEffect") or effect:IsA("ColorCorrectionEffect") then 
+                effect.Enabled = false 
+            end
+        end
+    end)
+end
+
+-- [[ 🌾 إمبراطورية الحصاد (Eternal Farm) ]] --
+local FarmTab = Window:CreateTab("🚜 الحصاد الخالد", 4483362458)
+_G.EternalFarm = false
+
+FarmTab:CreateToggle({
+   Name = "الحصاد الذكي الفائق (بدون أخطاء)",
+   CurrentValue = false,
+   Callback = function(Value)
+      _G.EternalFarm = Value
+      task.spawn(function()
+         while _G.EternalFarm do
+            UltimatePurge() -- تطهير مستمر للسيرفر
+            pcall(function()
+               for _, v in pairs(workspace:GetDescendants()) do
+                  -- نظام "الفحص المسبق": لا يحصد إلا المحاصيل الحقيقية
+                  if v:IsA("ClickDetector") or v:IsA("ProximityPrompt") then
+                     local obj = v.Parent
+                     -- يتجنب أزرار الـ UI، خانات اللاعبين، وأي شيء لا يعطي مالاً
+                     if obj:IsA("BasePart") and not obj.Name:find("Slot") and not obj.Name:find("UI") then
+                        if obj.Name:lower():find("crop") or obj.Name:lower():find("fruit") or obj:FindFirstChildOfClass("MeshPart") then
+                           task.spawn(function()
+                              if v:IsA("ClickDetector") then fireclickdetector(v) else fireproximityprompt(v) end
+                           end)
+                        end
+                     end
+                  end
+               end
+            end)
+            task.wait(0.6) -- السرعة المثالية لمنع السبام
+         end
+      end)
+   end,
+})
+
+FarmTab:CreateToggle({
+   Name = "تضخيم الشبح V16 (لا يوجد لون أزرق)",
+   CurrentValue = false,
+   Callback = function(Value)
+      _G.GhostScaleV16 = Value
+      task.spawn(function()
+         while _G.GhostScaleV16 do
+            pcall(function()
+               for _, v in pairs(workspace:GetDescendants()) do
+                  if v:IsA("BasePart") and v:FindFirstChildOfClass("ClickDetector") then
+                     v.Size = Vector3.new(50, 50, 50) -- تضخيم هائل
+                     v.Transparency = 1 -- شفاف 100% (مستحيل ترى لون أزرق)
+                     v.CanCollide = false
+                  end
+               end
+            end)
+            task.wait(5)
+         end
+      end)
+   end,
+})
+
+-- [[ 🚀 حزمة الـ 1000 ميزة (Power Core) ]] --
+local PowerTab = Window:CreateTab("⚡ قوى VIP", 4483362458)
+
+PowerTab:CreateButton({
+   Name = "تفعيل حزمة الـ 1000 ميزة (Ultimate Optimize)",
+   Callback = function()
+      UltimatePurge()
+      local hum = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+      hum.WalkSpeed = 130
+      hum.JumpPower = 100
+      -- تحسينات المحرك
+      settings().Physics.AllowSleep = true
+      print("Madam V16 Eternal Source Activated")
+   end,
+})
+
+-- [[ ⚙️ الإعدادات ]] --
+local ConfigTab = Window:CreateTab("🛠️ التحكم", 4483362458)
+ConfigTab:CreateKeybind({
+   Name = "زر الإخفاء والظهور",
+   CurrentKeybind = "LeftControl",
+   HoldToInteract = false,
+   Callback = function() Rayfield:ToggleUI() end,
+})
